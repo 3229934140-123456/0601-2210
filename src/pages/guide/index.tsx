@@ -47,10 +47,11 @@ const GuidePage: React.FC = () => {
   }, [currentFloor]);
 
   const filteredExhibits = useMemo(() => {
-    let result = searchExhibits(searchKeyword);
+    let result: typeof exhibits = [];
     if (searchKeyword) {
       result = searchExhibits(searchKeyword);
     } else {
+      result = exhibitsOnFloor;
       if (currentHallId) {
         result = result.filter((e) => e.hallId === currentHallId);
       }
@@ -64,7 +65,7 @@ const GuidePage: React.FC = () => {
       result = [...result].sort((a, b) => a.era.localeCompare(b.era));
     }
     return result;
-  }, [searchKeyword, currentHallId, categoryFilter, sortBy]);
+  }, [searchKeyword, currentHallId, currentFloor, categoryFilter, sortBy, exhibitsOnFloor]);
 
   const handleHallSelect = (hallId: string) => {
     console.log('[GuidePage] select hall:', hallId);
@@ -183,9 +184,9 @@ const GuidePage: React.FC = () => {
               </View>
             )}
             <HallMap
-              halls={hallsOnFloor}
+              halls={halls}
               currentHallId={currentHallId}
-              exhibits={exhibitsOnFloor}
+              exhibits={exhibits}
               currentFloor={currentFloor}
               visitedExhibits={userProgress.visitedExhibits}
               onFloorChange={handleFloorChange}

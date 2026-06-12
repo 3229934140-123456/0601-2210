@@ -5,12 +5,14 @@ import styles from './index.module.scss';
 import { useAppStore } from '@/store/useAppStore';
 import { exhibits } from '@/data/exhibits';
 import { badges } from '@/data/badges';
+import { routes } from '@/data/routes';
 import { getLevelName } from '@/utils';
 
 const MinePage: React.FC = () => {
-  const { userProfile, userProgress, collectedExhibits: collectedExhibitIds } = useAppStore();
+  const { userProfile, userProgress, collectedExhibits: collectedExhibitIds, savedRoutes, isRouteSaved } = useAppStore();
 
   const collectedExhibits = exhibits.filter((e) => collectedExhibitIds.includes(e.id));
+  const savedRouteList = routes.filter((r) => savedRoutes.includes(r.id));
   const levelName = getLevelName(userProfile.level);
 
   const handleMenuClick = (url: string, needLogin = false) => {
@@ -27,6 +29,12 @@ const MinePage: React.FC = () => {
       icon: '⭐',
       name: '我的收藏',
       desc: `${collectedExhibits.length}件展品`,
+      url: '',
+    },
+    {
+      icon: '🗺️',
+      name: '已保存路线',
+      desc: `${savedRouteList.length}条路线`,
       url: '',
     },
     {
@@ -102,16 +110,16 @@ const MinePage: React.FC = () => {
             <Text className={styles.statLabel}>已参观</Text>
           </View>
           <View className={styles.statItem}>
-            <Text className={styles.statNum}>{userProgress.collectedBadges.length}</Text>
-            <Text className={styles.statLabel}>纪念章</Text>
-          </View>
-          <View className={styles.statItem}>
-            <Text className={styles.statNum}>{userProgress.completedQuizzes.length}</Text>
-            <Text className={styles.statLabel}>答题数</Text>
-          </View>
-          <View className={styles.statItem}>
             <Text className={styles.statNum}>{collectedExhibits.length}</Text>
             <Text className={styles.statLabel}>收藏</Text>
+          </View>
+          <View className={styles.statItem}>
+            <Text className={styles.statNum}>{savedRouteList.length}</Text>
+            <Text className={styles.statLabel}>已保存路线</Text>
+          </View>
+          <View className={styles.statItem}>
+            <Text className={styles.statNum}>{userProgress.collectedBadges.length}</Text>
+            <Text className={styles.statLabel}>纪念章</Text>
           </View>
         </View>
       </View>
@@ -158,6 +166,45 @@ const MinePage: React.FC = () => {
           )}
         </View>
       </View>
+
+      {savedRouteList.length > 0 && (
+        <View className={styles.section}>
+          <View className={styles.favSection}>
+            <View className={styles.favHeader}>
+              <Text className={styles.favTitle}>已保存路线</Text>
+              <Text
+                className={styles.favMore}
+                onClick={() => Taro.switchTab({ url: '/pages/guide/index' })}
+              >
+                查看全部 →
+              </Text>
+            </View>
+            <View className={styles.savedRouteList}>
+              {savedRouteList.map((route) => (
+                <View
+                  key={route.id}
+                  className={styles.savedRouteItem}
+                  onClick={() => Taro.navigateTo({ url: `/pages/route-detail/index?id=${route.id}` })}
+                >
+                  <Image
+                    className={styles.savedRouteImage}
+                    src={route.image}
+                    mode="aspectFill"
+                    onError={(e) => console.error('[Mine] route image error:', e)}
+                  />
+                  <View className={styles.savedRouteInfo}>
+                    <Text className={styles.savedRouteName}>{route.name}</Text>
+                    <Text className={styles.savedRouteMeta}>
+                      {route.mode === 'children' ? '👶 儿童模式' : '📚 深度模式'} · {route.exhibitCount}件展品
+                    </Text>
+                  </View>
+                  <Text className={styles.menuArrow}>›</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </View>
+      )}
 
       <View className={styles.section}>
         <Text className={styles.sectionTitle}>常用功能</Text>

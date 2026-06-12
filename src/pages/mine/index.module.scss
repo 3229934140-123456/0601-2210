@@ -289,3 +289,53 @@
   font-size: $font-size-sm;
   color: $color-text-tertiary;
 }
+
+.savedRouteList {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.savedRouteItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 2rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.savedRouteImage {
+  width: 100rpx;
+  height: 80rpx;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+}
+
+.savedRouteInfo {
+  flex: 1;
+  margin-left: $spacing-md;
+  min-width: 0;
+}
+
+.savedRouteName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  display: block;
+  @include text-ellipsis;
+}
+
+.savedRouteMeta {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+  display: block;
+}

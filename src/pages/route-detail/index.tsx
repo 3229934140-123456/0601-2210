@@ -10,8 +10,9 @@ const RouteDetailPage = () => {
   const router = useRouter();
   const routeId = router.params.id || 'route1';
   const route = useMemo(() => getRouteById(routeId), [routeId]);
-  const { visitedExhibits, isRouteSaved, toggleSaveRoute } = useAppStore();
-  const saved = route ? isRouteSaved(routeId) : false;
+  const { userProgress, savedRoutes, isRouteSaved, toggleSaveRoute } = useAppStore();
+  const visitedExhibits = userProgress.visitedExhibits;
+  const saved = isRouteSaved(routeId);
   const [, forceRefresh] = useState(0);
 
   useDidShow(() => {

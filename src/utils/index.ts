@@ -56,7 +56,25 @@ export const parseExhibitFromScan = (raw: string): ScanParseResult => {
     if (getExhibitById(id)) {
       exhibitId = id;
     }
-  } else {
+  } else if (result.includes('exhibit=') || result.includes('exhibit%3D') || result.includes('id=')) {
+    const patterns = [
+      /[?&]exhibit=([^&]+)/i,
+      /[?&]exhibit%3D([^&]+)/i,
+      /[?&]id=([^&]+)/i,
+    ];
+    for (const pattern of patterns) {
+      const match = result.match(pattern);
+      if (match && match[1]) {
+        const decoded = decodeURIComponent(match[1]).trim();
+        if (getExhibitById(decoded)) {
+          exhibitId = decoded;
+          break;
+        }
+      }
+    }
+  }
+
+  if (!exhibitId) {
     const matched = exhibits.find(
       (e) =>
         e.name.includes(result) ||
