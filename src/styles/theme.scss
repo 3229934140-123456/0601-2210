@@ -1,0 +1,57 @@
+// ============================================
+// 主题配色变量 - 数字文化馆
+// ============================================
+
+// 品牌主题色：古典棕 + 古金色系
+$color-primary: #8B4513;
+$color-primary-light: #D4A574;
+$color-primary-dark: #654321;
+$color-primary-gradient: linear-gradient(135deg, #D4A574 0%, #8B4513 100%);
+
+// 辅助色
+$color-secondary: #2E7D5B;
+$color-secondary-light: #5BA883;
+$color-accent: #C9A859;
+
+// 功能色
+$color-success: #00B42A;
+$color-warning: #FF7D00;
+$color-error: #F53F3F;
+$color-info: #165DFF;
+
+// 纪念章特色色
+$color-badge-gold: #C9A859;
+$color-badge-silver: #A8A9AD;
+$color-badge-bronze: #CD7F32;
+$color-badge-red: #E85D5D;
+
+// 背景色
+$color-bg-page: #F7F3EC;
+$color-bg-card: #FFFFFF;
+$color-bg-hover: #F2EDE4;
+$color-bg-warm: #FBF8F2;
+
+// 文本色
+$color-text-primary: #2C2C2C;
+$color-text-secondary: #5C5C5C;
+$color-text-tertiary: #8C8C8C;
+$color-text-disabled: #C9CDD4;
+$color-text-white: #FFFFFF;
+$color-text-gold: #C9A859;
+
+// 边框色
+$color-border: #E8E0D4;
+$color-divider: #F2EDE4;
+$color-border-light: #F0EBE3;
+
+// 补充：更多文本色层级
+$color-text-hint: #999999;
+
+// 字体
+$font-family-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+$font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+// 阴影（简化命名）
+$shadow-sm: 0 2rpx 12rpx rgba(0,0,0,0.06);
+$shadow-md: 0 4rpx 20rpx rgba(0,0,0,0.1);
+$shadow-lg: 0 8rpx 32rpx rgba(0,0,0,0.14);

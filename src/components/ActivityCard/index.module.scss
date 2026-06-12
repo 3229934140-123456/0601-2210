@@ -1,0 +1,125 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: $shadow-card-hover;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  height: 280rpx;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.typeTag {
+  position: absolute;
+  top: $spacing-sm;
+  left: $spacing-sm;
+  background: $color-primary-gradient;
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.typeText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.bookedTag {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  background: rgba($color-success, 0.9);
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.bookedText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.content {
+  padding: $spacing-md $spacing-lg $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-sm;
+  @include text-ellipsis;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.infoDot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: $radius-round;
+  background: $color-accent;
+  margin-right: $spacing-xs;
+}
+
+.infoText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.progressWrap {
+  display: flex;
+  align-items: center;
+  margin-top: $spacing-sm;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8rpx;
+  background: $color-divider;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-right: $spacing-sm;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary-gradient;
+  border-radius: $radius-round;
+
+  &.full {
+    background: $color-error;
+  }
+}
+
+.slotText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+
+  &.fullText {
+    color: $color-error;
+  }
+}

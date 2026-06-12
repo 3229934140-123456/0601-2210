@@ -1,0 +1,101 @@
+@use '@/styles/variables.scss' as *;
+
+.small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160rpx;
+}
+
+.large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-lg $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  border: 3rpx solid;
+  box-shadow: $shadow-card;
+  width: 100%;
+}
+
+.obtainedWrap,
+.lockWrap {
+  position: relative;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: $spacing-sm;
+}
+
+.small .obtainedWrap,
+.small .lockWrap {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.large .obtainedWrap,
+.large .lockWrap {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.obtainedWrap {
+  box-shadow: 0 4rpx 16rpx rgba(201, 168, 89, 0.3);
+}
+
+.lockWrap {
+  filter: grayscale(1);
+}
+
+.badgeImage {
+  width: 100%;
+  height: 100%;
+}
+
+.lockMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lockIcon {
+  font-size: $font-size-xl;
+}
+
+.name {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  @include text-ellipsis;
+  width: 100%;
+}
+
+.nameLocked {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  text-align: center;
+  @include text-ellipsis;
+  width: 100%;
+}
+
+.desc {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  text-align: center;
+  margin-top: $spacing-xs;
+  @include text-ellipsis-multi(2);
+  display: -webkit-box;
+}
+
+.date {
+  font-size: $font-size-xs;
+  color: $color-accent;
+  margin-top: $spacing-xs;
+}

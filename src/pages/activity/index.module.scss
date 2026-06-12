@@ -1,0 +1,221 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: 0 $page-padding;
+  padding-bottom: 120rpx;
+}
+
+.section {
+  margin-bottom: $spacing-lg;
+}
+
+.typeTabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin: $spacing-md 0;
+  flex-wrap: wrap;
+}
+
+.typeTab {
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+}
+
+.typeTabActive {
+  background: $color-primary-gradient;
+}
+
+.typeTabText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.typeTabActive .typeTabText {
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.guideSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.guideHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.guideTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.guideMore {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.guideList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.guideItem {
+  display: flex;
+  padding: $spacing-md;
+  background: $color-bg-warm;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.guideAvatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-round;
+  flex-shrink: 0;
+}
+
+.guideInfo {
+  flex: 1;
+  margin-left: $spacing-md;
+  min-width: 0;
+}
+
+.guideNameRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6rpx;
+}
+
+.guideName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-right: $spacing-sm;
+}
+
+.guideRating {
+  font-size: $font-size-xs;
+  color: $color-accent;
+}
+
+.guideSpecialty {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: 6rpx;
+  @include text-ellipsis;
+}
+
+.guideMeta {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.guideMetaItem {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  background: rgba($color-primary, 0.06);
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.guideBookBtn {
+  align-self: center;
+  margin-left: $spacing-md;
+  height: $button-height-sm;
+  padding: 0 $spacing-md;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.guideBookText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+}
+
+.noticeCard {
+  background: linear-gradient(135deg, rgba(46, 125, 91, 0.12) 0%, rgba(201, 168, 89, 0.12) 100%);
+  border: 2rpx solid rgba(201, 168, 89, 0.3);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.noticeTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.noticeText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.hoursList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.hourItem {
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: $radius-md;
+}
+
+.hourLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.hourValue {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl * 2 0;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  opacity: 0.3;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}

@@ -1,0 +1,345 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 180rpx;
+}
+
+.content {
+  padding: 24rpx;
+}
+
+.cardThemeTabs {
+  display: flex;
+  gap: 16rpx;
+  overflow-x: auto;
+  padding: 8rpx 0 24rpx;
+  margin-bottom: 8rpx;
+}
+
+.themeTab {
+  padding: 14rpx 28rpx;
+  border-radius: 28rpx;
+  background: #fff;
+  font-size: 26rpx;
+  color: $color-text-secondary;
+  white-space: nowrap;
+  box-shadow: $shadow-sm;
+  flex-shrink: 0;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+
+  &.active {
+    background: $color-primary;
+    color: #fff;
+    border-color: $color-accent;
+  }
+}
+
+.shareCard {
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.15);
+  position: relative;
+  aspect-ratio: 3/4;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+
+  &.classic {
+    background: linear-gradient(180deg, #8B4513 0%, #A0522D 40%, #D4A574 100%);
+  }
+  &.elegant {
+    background: linear-gradient(180deg, #2C3E50 0%, #34495E 50%, #C9A859 100%);
+  }
+  &.fresh {
+    background: linear-gradient(180deg, #2E7D5B 0%, #52B788 50%, #D8F3DC 100%);
+  }
+  &.gold {
+    background: linear-gradient(135deg, #C9A859 0%, #FFE8A0 30%, #C9A859 60%, #8B4513 100%);
+  }
+}
+
+.cardWatermark {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.cardHeader {
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+
+.cardLogo {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 24rpx;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  border: 2rpx solid rgba(255,255,255,0.35);
+}
+
+.cardTitleGroup {
+  text-align: right;
+  color: #fff;
+}
+
+.cardMuseumName {
+  font-size: 36rpx;
+  font-weight: 700;
+  font-family: $font-family-serif;
+  margin-bottom: 6rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.2);
+}
+
+.cardDate {
+  font-size: 24rpx;
+  opacity: 0.85;
+}
+
+.cardMain {
+  flex: 1;
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cardQuote {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: $font-family-serif;
+  line-height: 1.5;
+  margin-bottom: 24rpx;
+  text-shadow: 0 2rpx 12rpx rgba(0,0,0,0.25);
+}
+
+.cardSubQuote {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  margin-bottom: 32rpx;
+}
+
+.statGroup {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(16px);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  border: 1rpx solid rgba(255,255,255,0.25);
+}
+
+.statItem {
+  text-align: center;
+  flex: 1;
+
+  & + & {
+    border-left: 1rpx solid rgba(255,255,255,0.25);
+  }
+}
+
+.statNum {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: $font-family-serif;
+  margin-bottom: 4rpx;
+}
+
+.statLabel {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.85);
+}
+
+.cardFooter {
+  padding: 0 40rpx 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.visitorInfo {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  border: 1rpx solid rgba(255,255,255,0.25);
+}
+
+.visitorAvatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  overflow: hidden;
+  margin-right: 16rpx;
+  border: 2rpx solid rgba(255,255,25,0.5);
+
+  :global(.image) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.visitorText {
+  flex: 1;
+  color: #fff;
+
+  .name {
+    font-size: 26rpx;
+    font-weight: 600;
+    margin-bottom: 4rpx;
+  }
+
+  .level {
+    font-size: 22rpx;
+    opacity: 0.85;
+  }
+}
+
+.visitorBadge {
+  font-size: 40rpx;
+}
+
+.cardSection {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: $shadow-sm;
+}
+
+.sectionTitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-primary-gradient;
+    border-radius: 3rpx;
+    margin-right: 16rpx;
+  }
+}
+
+.customInput {
+  height: 80rpx;
+  background: rgba(0,0,0,0.04);
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+}
+
+.customTextarea {
+  min-height: 120rpx;
+  background: rgba(0,0,0,0.04);
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: $color-text-primary;
+  line-height: 1.6;
+}
+
+.stylesRow {
+  display: flex;
+  gap: 16rpx;
+}
+
+.styleItem {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 16rpx;
+  position: relative;
+  overflow: hidden;
+  border: 4rpx solid transparent;
+  transition: all 0.2s;
+
+  &.classic { background: linear-gradient(180deg, #8B4513, #D4A574); }
+  &.elegant { background: linear-gradient(180deg, #2C3E50, #C9A859); }
+  &.fresh { background: linear-gradient(180deg, #2E7D5B, #D8F3DC); }
+  &.gold { background: linear-gradient(135deg, #C9A859, #FFE8A0, #8B4513); }
+
+  &.active {
+    border-color: $color-primary;
+    transform: scale(1.05);
+    box-shadow: 0 6rpx 20rpx rgba(139,69,19,0.3);
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      bottom: 6rpx;
+      right: 6rpx;
+      width: 36rpx;
+      height: 36rpx;
+      border-radius: 18rpx;
+      background: $color-primary;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22rpx;
+      font-weight: 700;
+    }
+  }
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  display: flex;
+  gap: 16rpx;
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
+  z-index: 100;
+}
+
+.actionBtn {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+
+  &.outline {
+    background: rgba(139,69,19,0.08);
+    color: $color-primary;
+  }
+
+  &.primary {
+    background: $color-primary-gradient;
+    color: #fff;
+  }
+}

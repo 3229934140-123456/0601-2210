@@ -1,0 +1,265 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 160rpx;
+}
+
+.headerImage {
+  width: 100%;
+  height: 500rpx;
+  position: relative;
+
+  :global(.image) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.headerActions {
+  position: absolute;
+  top: 24rpx;
+  right: 24rpx;
+  display: flex;
+  gap: 16rpx;
+}
+
+.iconButton {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+.content {
+  padding: 32rpx;
+}
+
+.exhibitName {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: $color-text-primary;
+  margin-bottom: 16rpx;
+  font-family: $font-family-serif;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.metaTag {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  background: rgba(139, 69, 19, 0.1);
+  color: $color-primary;
+}
+
+.hallInfo {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 32rpx;
+  box-shadow: $shadow-sm;
+
+  .icon {
+    font-size: 36rpx;
+    margin-right: 16rpx;
+  }
+
+  .hallName {
+    flex: 1;
+    font-size: 28rpx;
+    color: $color-text-primary;
+    font-weight: 500;
+  }
+
+  .navBtn {
+    padding: 8rpx 20rpx;
+    border-radius: 20rpx;
+    background: $color-primary;
+    color: #fff;
+    font-size: 24rpx;
+  }
+}
+
+.sectionCard {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: $shadow-sm;
+}
+
+.sectionTitle {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-primary-gradient;
+    border-radius: 3rpx;
+    margin-right: 16rpx;
+  }
+}
+
+.description {
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: $color-text-secondary;
+}
+
+.viewsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid $color-border-light;
+  font-size: 24rpx;
+  color: $color-text-hint;
+}
+
+.statsRow {
+  display: flex;
+  gap: 48rpx;
+}
+
+.quizCard {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: linear-gradient(135deg, rgba(201,168,89,0.15), rgba(139,69,19,0.08));
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(201,168,89,0.3);
+  margin-bottom: 24rpx;
+}
+
+.quizIcon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+  background: $color-primary-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.quizInfo {
+  flex: 1;
+
+  .quizTitle {
+    font-size: 30rpx;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-bottom: 6rpx;
+  }
+
+  .quizDesc {
+    font-size: 24rpx;
+    color: $color-text-hint;
+  }
+}
+
+.startBtn {
+  padding: 12rpx 28rpx;
+  border-radius: 28rpx;
+  background: $color-accent;
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
+  z-index: 100;
+}
+
+.collectBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  gap: 4rpx;
+
+  .icon {
+    font-size: 40rpx;
+  }
+
+  .text {
+    font-size: 22rpx;
+    color: $color-text-hint;
+  }
+
+  &.active {
+    .icon {
+      color: $color-accent;
+    }
+    .text {
+      color: $color-accent;
+    }
+  }
+}
+
+.mainBtn {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 44rpx;
+  background: $color-primary-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.audioSection {
+  margin-bottom: 24rpx;
+}
+
+.emptyHint {
+  padding: 32rpx;
+  text-align: center;
+  color: $color-text-hint;
+  font-size: 28rpx;
+}

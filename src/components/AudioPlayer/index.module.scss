@@ -1,0 +1,126 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.langList {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.langTag {
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+  background: $color-bg-hover;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.langTagActive {
+  background: $color-primary-gradient;
+}
+
+.langText {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.langTextActive {
+  color: $color-text-white;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.playBtn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+  flex-shrink: 0;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.playingBtn {
+  box-shadow: 0 0 0 16rpx rgba($color-primary, 0.15);
+}
+
+.playIcon {
+  font-size: $font-size-xl;
+  color: $color-text-white;
+  margin-left: 4rpx;
+}
+
+.progressWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.progressBar {
+  position: relative;
+  height: 8rpx;
+  background: $color-divider;
+  border-radius: $radius-round;
+  overflow: visible;
+  margin-bottom: $spacing-xs;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary-gradient;
+  border-radius: $radius-round;
+}
+
+.progressThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  border: 4rpx solid $color-primary;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.timeRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.timeText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

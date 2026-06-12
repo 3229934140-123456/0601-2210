@@ -1,0 +1,140 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+  margin-bottom: $spacing-md;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: $shadow-card-hover;
+  }
+}
+
+.compact {
+  display: flex;
+  padding: $spacing-md;
+}
+
+.imageWrap {
+  position: relative;
+}
+
+.compact .imageWrap {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: $radius-md;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image {
+  width: 100%;
+  height: 360rpx;
+  display: block;
+}
+
+.compact .image {
+  height: 100%;
+}
+
+.visitedBadge {
+  position: absolute;
+  top: $spacing-sm;
+  left: $spacing-sm;
+  background: rgba($color-secondary, 0.9);
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.visitedText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.categoryTag {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  background: rgba($color-primary, 0.9);
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.categoryText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.content {
+  padding: $spacing-md $spacing-lg $spacing-lg;
+}
+
+.compact .content {
+  padding: 0 0 0 $spacing-md;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.era {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.desc {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-md;
+  @include text-ellipsis-multi(2);
+  display: -webkit-box;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.langList {
+  display: flex;
+  align-items: center;
+}
+
+.langTag {
+  background: $color-bg-hover;
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+  margin-right: $spacing-xs;
+}
+
+.langText {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.langMore {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.views {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

@@ -1,0 +1,406 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgba(212, 165, 116, 0.12) 0%, $color-bg-page 30%);
+  padding: 0 $page-padding;
+  padding-bottom: 120rpx;
+}
+
+.header {
+  padding: $spacing-lg 0 $spacing-md;
+}
+
+.greetingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-lg;
+}
+
+.greeting {
+  flex: 1;
+}
+
+.greetingTitle {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.greetingSub {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.locationBtn {
+  display: flex;
+  align-items: center;
+  background: $color-bg-card;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-button;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.locationIcon {
+  font-size: $font-size-md;
+  margin-right: 6rpx;
+}
+
+.locationText {
+  font-size: $font-size-sm;
+  color: $color-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.banner {
+  height: 300rpx;
+  border-radius: $radius-xl;
+  background: $color-primary-gradient;
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+  box-shadow: 0 8rpx 32rpx rgba(139, 69, 19, 0.2);
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  right: -60rpx;
+  top: -60rpx;
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  right: 40rpx;
+  bottom: -80rpx;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bannerTop {
+  position: relative;
+  z-index: 1;
+}
+
+.bannerTag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+  margin-bottom: $spacing-md;
+}
+
+.bannerTagText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.bannerTitle {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  line-height: 1.4;
+  display: block;
+}
+
+.bannerDesc {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+.bannerBottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bannerStats {
+  display: flex;
+  gap: $spacing-xl;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNum {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.bannerBtn {
+  background: $color-text-white;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-button;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.bannerBtnText {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.section {
+  margin-bottom: $spacing-lg;
+}
+
+.routeTabs {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.routeTab {
+  flex: 1;
+  height: $button-height-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  transition: all $transition-base;
+  box-shadow: $shadow-card;
+}
+
+.routeTabActive {
+  background: $color-primary-gradient;
+}
+
+.routeTabText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.routeTabActive .routeTabText {
+  color: $color-text-white;
+}
+
+.routeCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+  margin-bottom: $spacing-md;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.routeCardTop {
+  display: flex;
+  padding: $spacing-md;
+}
+
+.routeImage {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: $radius-md;
+  flex-shrink: 0;
+}
+
+.routeInfo {
+  flex: 1;
+  margin-left: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.routeName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+}
+
+.routeDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  @include text-ellipsis-multi(2);
+  display: -webkit-box;
+  flex: 1;
+  margin: $spacing-xs 0;
+}
+
+.routeMeta {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+}
+
+.metaIcon {
+  font-size: $font-size-sm;
+  margin-right: 4rpx;
+}
+
+.metaText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.difficultyTag {
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-xs;
+  background: rgba($color-secondary, 0.1);
+}
+
+.difficultyText {
+  font-size: $font-size-xs;
+  color: $color-secondary;
+}
+
+.routeCardBottom {
+  border-top: 2rpx solid $color-divider;
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progressInfo {
+  flex: 1;
+}
+
+.progressTop {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+}
+
+.progressLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.progressPercent {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.progressBar {
+  height: 8rpx;
+  background: $color-divider;
+  border-radius: $radius-round;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary-gradient;
+  border-radius: $radius-round;
+}
+
+.startBtn {
+  margin-left: $spacing-md;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.startBtnText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+}
+
+.exhibitScroll {
+  margin: 0 (-$page-padding);
+  padding: 0 $page-padding;
+}
+
+.exhibitList {
+  display: flex;
+  gap: $spacing-md;
+  padding-bottom: $spacing-sm;
+  @include scroll-x-container;
+}
+
+.exhibitItem {
+  @include scroll-x-item(280rpx);
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.exhibitItemImage {
+  width: 100%;
+  height: 200rpx;
+}
+
+.exhibitItemBody {
+  padding: $spacing-md;
+}
+
+.exhibitItemName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  @include text-ellipsis;
+  margin-bottom: 6rpx;
+}
+
+.exhibitItemEra {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

@@ -1,0 +1,181 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.tag {
+  background: $color-primary-gradient;
+  padding: 6rpx $spacing-sm;
+  border-radius: $radius-xs;
+}
+
+.tagText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.points {
+  font-size: $font-size-sm;
+  color: $color-accent;
+  font-weight: $font-weight-semibold;
+}
+
+.question {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-loose;
+  margin-bottom: $spacing-lg;
+  display: block;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.optionSelected {
+  border-color: $color-primary;
+  background: rgba($color-primary, 0.05);
+}
+
+.optionCorrect {
+  border-color: $color-success;
+  background: rgba($color-success, 0.08);
+}
+
+.optionWrong {
+  border-color: $color-error;
+  background: rgba($color-error, 0.08);
+}
+
+.optionIndex {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.indexActive {
+  background: $color-primary-gradient;
+}
+
+.optionIndexText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-semibold;
+}
+
+.indexTextActive {
+  color: $color-text-white;
+}
+
+.optionText {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
+}
+
+.optionTextSelected {
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.optionIcon {
+  font-size: $font-size-lg;
+  color: $color-success;
+  font-weight: $font-weight-bold;
+  margin-left: $spacing-sm;
+}
+
+.optionIconWrong {
+  font-size: $font-size-lg;
+  color: $color-error;
+  font-weight: $font-weight-bold;
+  margin-left: $spacing-sm;
+}
+
+.explanation {
+  background: $color-bg-warm;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.explanationTitle {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.explanationText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+}
+
+.submitBtn {
+  width: 100%;
+  height: $button-height-md;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+.submitBtnDisabled {
+  background: $color-bg-hover;
+  cursor: not-allowed;
+}
+
+.submitText {
+  font-size: $font-size-md;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+}
+
+.submitBtnDisabled .submitText {
+  color: $color-text-tertiary;
+}

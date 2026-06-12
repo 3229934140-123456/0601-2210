@@ -1,0 +1,66 @@
+import { Hall } from '@/types';
+
+export const halls: Hall[] = [
+  {
+    id: 'hall1',
+    name: '第一展厅·青铜文明',
+    floor: 1,
+    description: '展示从商周到春秋战国时期的青铜器精品，领略中国青铜时代的辉煌成就。',
+    theme: '青铜器',
+    exhibitCount: 2,
+    isAccessible: true,
+    mapImage: 'https://picsum.photos/id/3/750/500',
+  },
+  {
+    id: 'hall2',
+    name: '第二展厅·瓷器珍品',
+    floor: 1,
+    description: '汇聚历代名窑瓷器，从原始青瓷到明清官窑，展现中国瓷器发展的完整脉络。',
+    theme: '瓷器',
+    exhibitCount: 2,
+    isAccessible: true,
+    mapImage: 'https://picsum.photos/id/103/750/500',
+  },
+  {
+    id: 'hall3',
+    name: '第三展厅·玉器瑰宝',
+    floor: 2,
+    description: '展出从新石器时代至清代的玉器精品，感受玉文化在中国传统文化中的独特地位。',
+    theme: '玉器',
+    exhibitCount: 2,
+    isAccessible: true,
+    mapImage: 'https://picsum.photos/id/119/750/500',
+  },
+  {
+    id: 'hall4',
+    name: '第四展厅·古代科技',
+    floor: 2,
+    description: '展现中国古代在天文、数学、医学、机械等领域的伟大发明创造。',
+    theme: '科技',
+    exhibitCount: 2,
+    isAccessible: false,
+    mapImage: 'https://picsum.photos/id/201/750/500',
+  },
+  {
+    id: 'hall5',
+    name: '第五展厅·织绣华章',
+    floor: 3,
+    description: '展示缂丝、刺绣、云锦等中国传统织绣工艺的精华之作。',
+    theme: '织绣',
+    exhibitCount: 2,
+    isAccessible: true,
+    mapImage: 'https://picsum.photos/id/225/750/500',
+  },
+  {
+    id: 'hall6',
+    name: '第六展厅·翰墨丹青',
+    floor: 3,
+    description: '馆藏历代名家书画精品，是领略中国传统书画艺术的殿堂。',
+    theme: '书画',
+    exhibitCount: 2,
+    isAccessible: true,
+    mapImage: 'https://picsum.photos/id/1025/750/500',
+  },
+];
+
+export const getHallById = (id: string): Hall | undefined => halls.find((h) => h.id === id);
