@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { UserProgress, UserProfile } from '@/types';
+import { exhibits } from '@/data/exhibits';
 
 interface AppState {
   userProfile: UserProfile;
@@ -8,9 +9,15 @@ interface AppState {
   searchKeyword: string;
   isPlayingAudio: boolean;
   currentExhibitId: string;
+  collectedExhibits: string[];
+  savedRoutes: string[];
+  currentFloor: number;
   setCurrentHall: (id: string) => void;
+  setCurrentFloor: (floor: number) => void;
   setSearchKeyword: (keyword: string) => void;
+  clearSearchKeyword: () => void;
   toggleCollectExhibit: (id: string) => void;
+  isExhibitCollected: (id: string) => boolean;
   markExhibitVisited: (id: string) => void;
   collectBadge: (id: string) => void;
   completeQuiz: (id: string) => void;
@@ -18,6 +25,8 @@ interface AppState {
   setAudioPlaying: (playing: boolean) => void;
   setCurrentExhibit: (id: string) => void;
   addPoints: (points: number) => void;
+  toggleSaveRoute: (id: string) => void;
+  isRouteSaved: (id: string) => boolean;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -39,14 +48,39 @@ export const useAppStore = create<AppState>((set, get) => ({
     savedRoutes: ['route1'],
   },
   currentHallId: 'hall1',
+  currentFloor: 1,
   searchKeyword: '',
   isPlayingAudio: false,
   currentExhibitId: '',
+  collectedExhibits: ['ex1', 'ex3', 'ex7', 'ex11'],
+  savedRoutes: ['route1'],
+
   setCurrentHall: (id) => set({ currentHallId: id }),
-  setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
-  toggleCollectExhibit: (id) => {
-    console.log('[Store] toggleCollectExhibit:', id);
+  setCurrentFloor: (floor) => {
+    set({ currentFloor: floor });
+    const hallsOnFloor = exhibits.filter((e) => {
+      const hallNum = parseInt(e.hallId.replace('hall', ''));
+      return Math.ceil(hallNum / 2) === floor;
+    });
+    if (hallsOnFloor.length > 0) {
+      const firstHallId = hallsOnFloor[0].hallId;
+      if (firstHallId !== get().currentHallId) {
+        set({ currentHallId: firstHallId });
+      }
+    }
   },
+
+  setSearchKeyword: (keyword) => set({ searchKeyword: keyword }),
+  clearSearchKeyword: () => set({ searchKeyword: '' }),
+
+  toggleCollectExhibit: (id) =>
+    set((state) => ({
+      collectedExhibits: state.collectedExhibits.includes(id)
+        ? state.collectedExhibits.filter((x) => x !== id)
+        : [...state.collectedExhibits, id],
+    })),
+  isExhibitCollected: (id) => get().collectedExhibits.includes(id),
+
   markExhibitVisited: (id) =>
     set((state) => ({
       userProgress: {
@@ -56,6 +90,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           : [...state.userProgress.visitedExhibits, id],
       },
     })),
+
   collectBadge: (id) =>
     set((state) => ({
       userProgress: {
@@ -65,6 +100,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           : [...state.userProgress.collectedBadges, id],
       },
     })),
+
   completeQuiz: (id) =>
     set((state) => ({
       userProgress: {
@@ -74,12 +110,15 @@ export const useAppStore = create<AppState>((set, get) => ({
           : [...state.userProgress.completedQuizzes, id],
       },
     })),
+
   updateProfile: (profile) =>
     set((state) => ({
       userProfile: { ...state.userProfile, ...profile },
     })),
+
   setAudioPlaying: (playing) => set({ isPlayingAudio: playing }),
   setCurrentExhibit: (id) => set({ currentExhibitId: id }),
+
   addPoints: (points) =>
     set((state) => ({
       userProfile: {
@@ -87,4 +126,12 @@ export const useAppStore = create<AppState>((set, get) => ({
         points: state.userProfile.points + points,
       },
     })),
+
+  toggleSaveRoute: (id) =>
+    set((state) => ({
+      savedRoutes: state.savedRoutes.includes(id)
+        ? state.savedRoutes.filter((r) => r !== id)
+        : [...state.savedRoutes, id],
+    })),
+  isRouteSaved: (id) => get().savedRoutes.includes(id),
 }));

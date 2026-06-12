@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, Image, ScrollView } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import styles from './index.module.scss';
@@ -6,7 +6,7 @@ import SearchBar from '@/components/SearchBar';
 import SectionHeader from '@/components/SectionHeader';
 import FunctionGrid from '@/components/FunctionGrid';
 import ExhibitCard from '@/components/ExhibitCard';
-import { exhibits, searchExhibits } from '@/data/exhibits';
+import { exhibits, getExhibitById } from '@/data/exhibits';
 import { routes } from '@/data/routes';
 import { useAppStore } from '@/store/useAppStore';
 import classnames from 'classnames';
@@ -14,44 +14,104 @@ import { GridItem } from '@/components/FunctionGrid';
 
 const HomePage: React.FC = () => {
   const [routeMode, setRouteMode] = useState<'children' | 'deep'>('children');
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const { userProfile, userProgress } = useAppStore();
+  const {
+    userProfile,
+    userProgress,
+    searchKeyword,
+    setSearchKeyword,
+    collectedExhibits,
+    isExhibitCollected,
+    toggleCollectExhibit,
+  } = useAppStore();
 
   useDidShow(() => {
     console.log('[HomePage] page show');
-    if (userProfile.closingReminder) {
-      console.log('[HomePage] closing reminder enabled');
-    }
   });
+
+  const handleScanCode = useCallback(() => {
+    Taro.scanCode({
+      onlyFromCamera: false,
+      scanType: ['qrCode', 'barCode'],
+      success: (res) => {
+        console.log('[Home] scan result:', res);
+        const result = res.result || '';
+        let exhibitId = '';
+
+        if (result.startsWith('exhibit:')) {
+          exhibitId = result.replace('exhibit:', '');
+        } else if (/^ex\d+$/i.test(result)) {
+          exhibitId = result;
+        } else {
+          const matched = exhibits.find(
+            (e) =>
+              e.name.includes(result) ||
+              e.id.toLowerCase() === result.toLowerCase()
+          );
+          if (matched) exhibitId = matched.id;
+        }
+
+        if (exhibitId && getExhibitById(exhibitId)) {
+          Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
+        } else {
+          Taro.showModal({
+            title: '未识别到展品',
+            content: `扫描内容：${result}\n\n未匹配到对应展品，请检查二维码是否正确或尝试手动搜索。`,
+            showCancel: false,
+            confirmText: '知道了',
+          });
+        }
+      },
+      fail: () => {
+        console.log('[Home] scan canceled or failed');
+      },
+    });
+  }, []);
 
   const functionItems: GridItem[] = [
     { icon: '🗺️', name: '展厅地图', url: '/pages/guide/index' },
-    { icon: '🧭', name: '路线推荐', onClick: () => Taro.switchTab({ url: '/pages/guide/index' }) },
-    { icon: '📖', name: '语音导览', onClick: () => Taro.showToast({ title: '请进入展品详情开启语音', icon: 'none' }) },
-    { icon: '📷', name: '扫码识物', onClick: () => Taro.scanCode({
-      success: (res) => {
-        console.log('[Home] scan result:', res);
-        Taro.showToast({ title: '扫码成功', icon: 'success' });
-      },
-      fail: () => Taro.showToast({ title: '已取消', icon: 'none' }),
-    }) },
+    {
+      icon: '🧭',
+      name: '路线推荐',
+      onClick: () => Taro.switchTab({ url: '/pages/guide/index' }),
+    },
+    {
+      icon: '📖',
+      name: '语音导览',
+      onClick: () =>
+        Taro.showToast({ title: '请进入展品详情开启语音', icon: 'none' }),
+    },
+    { icon: '📷', name: '扫码识物', onClick: handleScanCode },
     { icon: '❓', name: '互动问答', url: '/pages/quiz/index' },
     { icon: '🏅', name: '纪念章墙', url: '/pages/badge-wall/index' },
     { icon: '👩‍🏫', name: '预约讲解', url: '/pages/guide-booking/index' },
-    { icon: '📅', name: '活动排期', onClick: () => Taro.switchTab({ url: '/pages/activity/index' }) },
+    {
+      icon: '📅',
+      name: '活动排期',
+      onClick: () => Taro.switchTab({ url: '/pages/activity/index' }),
+    },
   ];
 
-  const handleSearch = useCallback((keyword: string) => {
-    console.log('[HomePage] search:', keyword);
-    setSearchKeyword(keyword);
-    if (keyword) {
-      Taro.switchTab({ url: '/pages/guide/index' });
-    }
-  }, []);
+  const handleSearch = useCallback(
+    (keyword: string) => {
+      console.log('[HomePage] search:', keyword);
+      setSearchKeyword(keyword);
+      if (keyword) {
+        Taro.switchTab({ url: '/pages/guide/index' });
+      }
+    },
+    [setSearchKeyword]
+  );
 
   const filteredRoutes = routes.filter((r) => r.mode === routeMode);
   const hotExhibits = exhibits.slice(0, 5);
-  const recommendedExhibits = searchKeyword ? searchExhibits(searchKeyword).slice(0, 4) : exhibits.slice(2, 6);
+  const recommendedExhibits = searchKeyword
+    ? exhibits.filter((e) =>
+        e.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        e.category.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        e.description.toLowerCase().includes(searchKeyword.toLowerCase())
+      ).slice(0, 4)
+    : exhibits.slice(2, 6);
+
   const progressPercent = Math.min(
     Math.round((userProgress.visitedExhibits.length / exhibits.length) * 100),
     100
@@ -65,6 +125,11 @@ const HomePage: React.FC = () => {
       Taro.showToast({ title: '当前位置：第一展厅', icon: 'none' });
       Taro.switchTab({ url: '/pages/guide/index' });
     }, 1000);
+  };
+
+  const handleExhibitCollect = (id: string, e: any) => {
+    e.stopPropagation?.();
+    toggleCollectExhibit(id);
   };
 
   return (
@@ -85,8 +150,10 @@ const HomePage: React.FC = () => {
 
         <SearchBar
           placeholder="搜索展品、展厅、文物..."
+          value={searchKeyword}
           onChange={setSearchKeyword}
           onSearch={handleSearch}
+          onScan={handleScanCode}
         />
       </View>
 
@@ -151,7 +218,9 @@ const HomePage: React.FC = () => {
         </View>
 
         {filteredRoutes.slice(0, 2).map((route) => {
-          const completedNodes = route.nodes.filter((n) => n.isCompleted).length;
+          const completedNodes = route.nodes.filter(
+            (n) => userProgress.visitedExhibits.includes(n.exhibitId)
+          ).length;
           const routeProgress = Math.round((completedNodes / route.nodes.length) * 100);
           return (
             <View
@@ -264,6 +333,8 @@ const HomePage: React.FC = () => {
             exhibit={exhibit}
             compact={true}
             visited={userProgress.visitedExhibits.includes(exhibit.id)}
+            collected={isExhibitCollected(exhibit.id)}
+            onCollect={(e) => handleExhibitCollect(exhibit.id, e)}
           />
         ))}
       </View>

@@ -7,24 +7,29 @@ import classnames from 'classnames';
 interface HallMapProps {
   halls: Hall[];
   currentHallId: string;
+  currentFloor?: number;
   exhibits?: Exhibit[];
   onHallSelect?: (hallId: string) => void;
   onExhibitSelect?: (exhibitId: string) => void;
+  onFloorChange?: (floor: number) => void;
   visitedExhibits?: string[];
 }
 
 const HallMap: React.FC<HallMapProps> = ({
   halls,
   currentHallId,
+  currentFloor,
   exhibits = [],
   onHallSelect,
   onExhibitSelect,
+  onFloorChange,
   visitedExhibits = [],
 }) => {
   const currentHall = halls.find((h) => h.id === currentHallId);
   const currentExhibits = exhibits.filter((e) => e.hallId === currentHallId);
 
   const floors = Array.from(new Set(halls.map((h) => h.floor))).sort();
+  const activeFloor = currentFloor ?? (currentHall?.floor || floors[0]);
 
   return (
     <View className={styles.container}>
@@ -34,8 +39,11 @@ const HallMap: React.FC<HallMapProps> = ({
             key={floor}
             className={classnames(
               styles.floorTab,
-              currentHall && currentHall.floor === floor && styles.floorTabActive
+              activeFloor === floor && styles.floorTabActive
             )}
+            onClick={() => {
+              onFloorChange && onFloorChange(floor);
+            }}
           >
             <Text className={styles.floorTabText}>{floor}F</Text>
           </View>
@@ -45,7 +53,7 @@ const HallMap: React.FC<HallMapProps> = ({
       <ScrollView className={styles.hallScroll} scrollX enhanced showScrollbar={false}>
         <View className={styles.hallList}>
           {halls
-            .filter((h) => !currentHall || h.floor === currentHall.floor)
+            .filter((h) => h.floor === activeFloor)
             .map((hall) => (
               <View
                 key={hall.id}

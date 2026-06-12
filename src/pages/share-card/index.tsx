@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { View, Text, Image, Input, Textarea } from '@tarojs/components';
-import { showToast } from '@tarojs/taro';
+import { View, Text, Image, Textarea } from '@tarojs/components';
+import Taro, { showToast, showModal, getEnv, ENV_TYPE } from '@tarojs/taro';
 import { useAppStore } from '@/store/useAppStore';
 import { getLevelName } from '@/utils';
 import dayjs from 'dayjs';
@@ -43,11 +43,49 @@ const ShareCardPage = () => {
   const todayStr = dayjs().format('YYYY年MM月DD日');
 
   const handleSaveImage = () => {
-    showToast({ title: '保存图片成功！', icon: 'success' });
+    const env = getEnv();
+    if (env === ENV_TYPE.WEAPP || env === ENV_TYPE.ALIPAY) {
+      showToast({ title: '保存图片功能开发中', icon: 'none' });
+    } else {
+      showModal({
+        title: '提示',
+        content: 'H5 暂不支持直接保存图片，请长按卡片区域截图保存',
+        showCancel: false,
+      });
+    }
   };
 
   const handleShare = () => {
-    showToast({ title: '已生成分享卡片', icon: 'none' });
+    const env = getEnv();
+    if (env === ENV_TYPE.WEAPP) {
+      showToast({ title: '请点击右上角「···」分享', icon: 'none' });
+    } else if (env === ENV_TYPE.WEB) {
+      if (navigator.share) {
+        navigator.share({
+          title: '数字文化馆 - 我的观展记录',
+          text: `我在数字文化馆参观了 ${visitData.exhibits} 件展品，收集了 ${visitData.badges} 枚纪念章，一起来体验吧！`,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        showModal({
+          title: '分享',
+          content: '请点击浏览器菜单选择分享，或复制链接分享给好友',
+          confirmText: '复制链接',
+          success: (res) => {
+            if (res.confirm) {
+              const url = window.location.href;
+              navigator.clipboard?.writeText(url).then(() => {
+                showToast({ title: '链接已复制', icon: 'success' });
+              }).catch(() => {
+                showToast({ title: '复制失败，请手动复制', icon: 'none' });
+              });
+            }
+          },
+        });
+      }
+    } else {
+      showToast({ title: '请点击右上角分享', icon: 'none' });
+    }
   };
 
   return (

@@ -8,9 +8,9 @@ import { badges } from '@/data/badges';
 import { getLevelName } from '@/utils';
 
 const MinePage: React.FC = () => {
-  const { userProfile, userProgress } = useAppStore();
+  const { userProfile, userProgress, collectedExhibits: collectedExhibitIds } = useAppStore();
 
-  const collectedExhibits = exhibits.filter((e) => e.isCollected);
+  const collectedExhibits = exhibits.filter((e) => collectedExhibitIds.includes(e.id));
   const levelName = getLevelName(userProfile.level);
 
   const handleMenuClick = (url: string, needLogin = false) => {

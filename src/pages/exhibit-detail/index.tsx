@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { View, Text, Image } from '@tarojs/components';
-import { useRouter, navigateTo, showToast, makePhoneCall } from '@tarojs/taro';
+import { useRouter, navigateTo, showToast, showModal, makePhoneCall, getEnv, ENV_TYPE } from '@tarojs/taro';
 import { getExhibitById } from '@/data/exhibits';
 import { getQuizByExhibitId } from '@/data/quizzes';
 import { useAppStore } from '@/store/useAppStore';
@@ -14,16 +14,15 @@ const ExhibitDetailPage = () => {
   const exhibit = useMemo(() => getExhibitById(exhibitId), [exhibitId]);
   const quiz = useMemo(() => getQuizByExhibitId(exhibitId), [exhibitId]);
   
-  const { userProgress, toggleCollectExhibit, markExhibitVisited } = useAppStore();
-  const [isCollected, setIsCollected] = useState(false);
+  const { collectedExhibits, toggleCollectExhibit, isExhibitCollected, markExhibitVisited } = useAppStore();
   const [showFullDesc, setShowFullDesc] = useState(false);
+  const isCollected = exhibit ? isExhibitCollected(exhibit.id) : false;
 
   useEffect(() => {
     if (exhibit) {
-      setIsCollected(exhibit.isCollected || userProgress.visitedExhibits.includes(exhibit.id));
       markExhibitVisited(exhibit.id);
     }
-  }, [exhibit, userProgress.visitedExhibits, markExhibitVisited]);
+  }, [exhibit, markExhibitVisited]);
 
   if (!exhibit) {
     return (
@@ -34,10 +33,8 @@ const ExhibitDetailPage = () => {
   }
 
   const handleCollect = () => {
-    const newVal = !isCollected;
-    setIsCollected(newVal);
     toggleCollectExhibit(exhibit.id);
-    showToast({ title: newVal ? '已加入收藏' : '已取消收藏', icon: 'none' });
+    showToast({ title: !isCollected ? '已加入收藏' : '已取消收藏', icon: 'none' });
   };
 
   const handleStartQuiz = () => {
@@ -50,7 +47,35 @@ const ExhibitDetailPage = () => {
   };
 
   const handleShare = () => {
-    showToast({ title: '分享功能开发中', icon: 'none' });
+    const env = getEnv();
+    if (env === ENV_TYPE.WEAPP) {
+      showToast({ title: '请点击右上角「···」分享', icon: 'none' });
+    } else if (env === ENV_TYPE.WEB) {
+      if (navigator.share) {
+        navigator.share({
+          title: exhibit.name,
+          text: exhibit.description,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        showModal({
+          title: '分享展品',
+          content: `分享「${exhibit.name}」给好友`,
+          confirmText: '复制链接',
+          success: (res) => {
+            if (res.confirm) {
+              navigator.clipboard?.writeText(window.location.href).then(() => {
+                showToast({ title: '链接已复制', icon: 'success' });
+              }).catch(() => {
+                showToast({ title: '复制失败，请手动复制', icon: 'none' });
+              });
+            }
+          },
+        });
+      }
+    } else {
+      showToast({ title: '请点击右上角分享', icon: 'none' });
+    }
   };
 
   const handleCall = () => {

@@ -9,6 +9,8 @@ interface SearchBarProps {
   value?: string;
   onSearch?: (keyword: string) => void;
   onChange?: (value: string) => void;
+  onClear?: () => void;
+  onScan?: () => void;
   showScan?: boolean;
 }
 
@@ -17,6 +19,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
   value,
   onSearch,
   onChange,
+  onClear,
+  onScan,
   showScan = true,
 }) => {
   const [inputValue, setInputValue] = useState(value || '');
@@ -32,24 +36,34 @@ const SearchBar: React.FC<SearchBarProps> = ({
     onSearch && onSearch(inputValue);
   };
 
+  const handleClear = () => {
+    setInputValue('');
+    onChange && onChange('');
+    onClear && onClear();
+  };
+
   const handleScan = () => {
-    console.log('[SearchBar] scan qr code');
-    Taro.scanCode({
-      success: (res) => {
-        console.log('[SearchBar] scan result:', res);
-        if (res.result) {
-          Taro.showToast({ title: '识别成功', icon: 'success' });
-          const params = res.result.includes('exhibit=') ? res.result.split('exhibit=')[1] : '';
-          if (params) {
-            Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${params}` });
+    if (onScan) {
+      onScan();
+    } else {
+      console.log('[SearchBar] scan qr code');
+      Taro.scanCode({
+        success: (res) => {
+          console.log('[SearchBar] scan result:', res);
+          if (res.result) {
+            Taro.showToast({ title: '识别成功', icon: 'success' });
+            const params = res.result.includes('exhibit=') ? res.result.split('exhibit=')[1] : '';
+            if (params) {
+              Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${params}` });
+            }
           }
-        }
-      },
-      fail: (err) => {
-        console.error('[SearchBar] scan error:', err);
-        Taro.showToast({ title: '扫码取消', icon: 'none' });
-      },
-    });
+        },
+        fail: (err) => {
+          console.error('[SearchBar] scan error:', err);
+          Taro.showToast({ title: '扫码取消', icon: 'none' });
+        },
+      });
+    }
   };
 
   return (
@@ -67,13 +81,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           confirmType="search"
         />
         {inputValue && (
-          <Text
-            className={styles.clearIcon}
-            onClick={() => {
-              setInputValue('');
-              onChange && onChange('');
-            }}
-          >
+          <Text className={styles.clearIcon} onClick={handleClear}>
             ×
           </Text>
         )}

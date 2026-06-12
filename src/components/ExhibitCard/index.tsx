@@ -8,11 +8,20 @@ import classnames from 'classnames';
 interface ExhibitCardProps {
   exhibit: Exhibit;
   visited?: boolean;
+  collected?: boolean;
   onClick?: () => void;
+  onCollect?: () => void;
   compact?: boolean;
 }
 
-const ExhibitCard: React.FC<ExhibitCardProps> = ({ exhibit, visited, onClick, compact }) => {
+const ExhibitCard: React.FC<ExhibitCardProps> = ({
+  exhibit,
+  visited,
+  collected = false,
+  onClick,
+  onCollect,
+  compact,
+}) => {
   const handleClick = () => {
     console.log('[ExhibitCard] click exhibit:', exhibit.id);
     if (onClick) {
@@ -24,11 +33,13 @@ const ExhibitCard: React.FC<ExhibitCardProps> = ({ exhibit, visited, onClick, co
     }
   };
 
+  const handleCollect = (e) => {
+    e.stopPropagation();
+    onCollect && onCollect();
+  };
+
   return (
-    <View
-      className={classnames(styles.card, compact && styles.compact)}
-      onClick={handleClick}
-    >
+    <View className={classnames(styles.card, compact && styles.compact)} onClick={handleClick}>
       <View className={styles.imageWrap}>
         <Image
           className={styles.image}
@@ -44,6 +55,14 @@ const ExhibitCard: React.FC<ExhibitCardProps> = ({ exhibit, visited, onClick, co
         <View className={styles.categoryTag}>
           <Text className={styles.categoryText}>{exhibit.category}</Text>
         </View>
+        {onCollect && (
+          <View
+            className={classnames(styles.collectBtn, collected && styles.collected)}
+            onClick={handleCollect}
+          >
+            <Text className={styles.collectIcon}>{collected ? '★' : '☆'}</Text>
+          </View>
+        )}
       </View>
       <View className={styles.content}>
         <Text className={styles.name}>{exhibit.name}</Text>
@@ -52,9 +71,7 @@ const ExhibitCard: React.FC<ExhibitCardProps> = ({ exhibit, visited, onClick, co
             {exhibit.era} · {exhibit.hallName}
           </Text>
         )}
-        {!compact && (
-          <Text className={styles.desc}>{exhibit.description}</Text>
-        )}
+        {!compact && <Text className={styles.desc}>{exhibit.description}</Text>}
         <View className={styles.footer}>
           <View className={styles.langList}>
             {exhibit.audioLanguages.slice(0, 2).map((lang) => (
@@ -63,8 +80,8 @@ const ExhibitCard: React.FC<ExhibitCardProps> = ({ exhibit, visited, onClick, co
               </View>
             ))}
             {exhibit.audioLanguages.length > 2 && (
-                <Text className={styles.langMore}>+{exhibit.audioLanguages.length - 2}</Text>
-              )}
+              <Text className={styles.langMore}>+{exhibit.audioLanguages.length - 2}</Text>
+            )}
           </View>
           <Text className={styles.views}>浏览 {exhibit.views.toLocaleString()}</Text>
         </View>

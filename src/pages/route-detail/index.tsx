@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { View, Text, Image } from '@tarojs/components';
 import { useRouter, navigateTo, showToast, switchTab } from '@tarojs/taro';
 import { getRouteById } from '@/data/routes';
@@ -10,8 +10,8 @@ const RouteDetailPage = () => {
   const router = useRouter();
   const routeId = router.params.id || 'route1';
   const route = useMemo(() => getRouteById(routeId), [routeId]);
-  const { userProgress } = useAppStore();
-  const [saved, setSaved] = useState(userProgress.savedRoutes.includes(routeId));
+  const { visitedExhibits, isRouteSaved, toggleSaveRoute } = useAppStore();
+  const saved = route ? isRouteSaved(routeId) : false;
 
   if (!route) {
     return (
@@ -23,12 +23,12 @@ const RouteDetailPage = () => {
     );
   }
 
-  const completedCount = route.nodes.filter((n) => n.isCompleted).length;
+  const completedCount = route.nodes.filter((n) => visitedExhibits.includes(n.exhibitId)).length;
   const progress = Math.round((completedCount / route.nodes.length) * 100);
-  const currentIndex = route.nodes.findIndex((n) => !n.isCompleted);
+  const currentIndex = route.nodes.findIndex((n) => !visitedExhibits.includes(n.exhibitId));
 
   const getNodeStatus = (index: number): string => {
-    if (route.nodes[index].isCompleted) return 'completed';
+    if (visitedExhibits.includes(route.nodes[index].exhibitId)) return 'completed';
     if (index === currentIndex) return 'current';
     return 'pending';
   };
@@ -40,8 +40,8 @@ const RouteDetailPage = () => {
   };
 
   const handleSaveRoute = () => {
-    setSaved(!saved);
-    showToast({ title: saved ? '已取消保存' : '已保存路线', icon: 'none' });
+    toggleSaveRoute(routeId);
+    showToast({ title: !saved ? '已保存路线' : '已取消保存', icon: 'none' });
   };
 
   const handleExhibitClick = (exhibitId: string) => {

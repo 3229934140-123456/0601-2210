@@ -69,6 +69,45 @@
   color: $color-text-white;
 }
 
+.collectBtn {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: rgba($color-bg-card, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-sm;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.compact .collectBtn {
+  top: $spacing-xs;
+  right: $spacing-xs;
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.collected {
+  background: $color-gold-light;
+}
+
+.collectIcon {
+  font-size: 32rpx;
+  color: $color-gold;
+  line-height: 1;
+}
+
+.collected .collectIcon {
+  color: $color-gold-dark;
+}
+
 .content {
   padding: $spacing-md $spacing-lg $spacing-lg;
 }
