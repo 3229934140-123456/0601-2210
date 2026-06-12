@@ -339,3 +339,139 @@
   justify-content: center;
   gap: 10rpx;
 }
+
+.planCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-top: $spacing-md;
+  box-shadow: $shadow-card;
+  border: 2rpx solid rgba($color-primary, 0.08);
+}
+
+.planHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.planTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.planStatus {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-button;
+  font-size: $font-size-xs;
+}
+
+.planDoing {
+  background: rgba($color-primary, 0.08);
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.planDone {
+  background: rgba($color-secondary, 0.1);
+  color: $color-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.planRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+}
+
+.planStation {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  min-width: 0;
+}
+
+.planDot {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: $font-weight-bold;
+  box-shadow: 0 4rpx 12rpx rgba($color-primary, 0.25);
+}
+
+.planDotNext {
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  border: 2rpx dashed $color-border;
+  box-shadow: none;
+}
+
+.planDotText {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: inherit;
+}
+
+.planInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.planLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.planValue {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  display: block;
+  @include text-ellipsis;
+}
+
+.planMeta {
+  font-size: $font-size-xs;
+  color: $color-text-hint;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.planDivider {
+  height: 2rpx;
+  background: $color-divider;
+  margin: $spacing-sm 0 $spacing-sm 76rpx;
+}
+
+.planRemaining {
+  flex-shrink: 0;
+  text-align: right;
+  padding-left: $spacing-md;
+  border-left: 2rpx dashed $color-border;
+}
+
+.planRemainingLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  display: block;
+}
+
+.planRemainingValue {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-gold-dark;
+  display: block;
+  margin-top: 4rpx;
+}

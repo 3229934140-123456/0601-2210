@@ -1,0 +1,335 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: $color-primary-gradient;
+  padding: $spacing-xl $spacing-lg $spacing-lg;
+  color: $color-text-white;
+}
+
+.summary {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-lg;
+}
+
+.summaryNum {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  color: $color-gold-light;
+  line-height: 1;
+}
+
+.summaryLabel {
+  font-size: $font-size-md;
+  color: rgba($color-text-white, 0.85);
+}
+
+.filterTabs {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.filterTab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  background: rgba($color-text-white, 0.12);
+  border-radius: $radius-button;
+  transition: all $transition-base;
+  border: 2rpx solid transparent;
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.filterTabActive {
+  background: $color-bg-card;
+  border-color: $color-gold;
+
+  .filterIcon,
+  .filterText {
+    color: $color-primary;
+  }
+}
+
+.filterIcon {
+  font-size: 28rpx;
+  color: $color-text-white;
+}
+
+.filterText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.content {
+  flex: 1;
+  padding: $spacing-lg;
+  height: calc(100vh - 320rpx);
+}
+
+.routeList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.routeCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.routeCover {
+  position: relative;
+  width: 100%;
+  height: 260rpx;
+}
+
+.routeImage {
+  width: 100%;
+  height: 100%;
+}
+
+.modeBadge {
+  position: absolute;
+  left: $spacing-sm;
+  bottom: $spacing-sm;
+  padding: 6rpx $spacing-sm;
+  background: rgba($color-primary, 0.9);
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.saveBtn {
+  position: absolute;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: rgba($color-bg-card, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-sm;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.saveText {
+  font-size: 32rpx;
+}
+
+.routeInfo {
+  padding: $spacing-md $spacing-lg $spacing-lg;
+}
+
+.routeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+  gap: $spacing-sm;
+}
+
+.routeName {
+  flex: 1;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.diffBadge {
+  padding: 4rpx $spacing-sm;
+  background: $color-bg-warm;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+
+  Text {
+    font-size: $font-size-xs;
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.routeMeta {
+  display: flex;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-sm;
+
+  Text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm 0 $spacing-md;
+  border-bottom: 2rpx solid $color-divider;
+  margin-bottom: $spacing-md;
+}
+
+.progressWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.progressBar {
+  height: 12rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-primary-gradient;
+  border-radius: $radius-round;
+  transition: width $transition-base;
+}
+
+.progressText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.percent {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: $color-gold-dark;
+  flex-shrink: 0;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.actionBtn {
+  flex: 1;
+  height: 72rpx;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.85;
+  }
+
+  Text {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.primaryBtn {
+  background: $color-primary-gradient;
+
+  Text {
+    color: $color-text-white;
+  }
+}
+
+.secondaryBtn {
+  background: rgba($color-secondary, 0.1);
+
+  Text {
+    color: $color-secondary;
+  }
+}
+
+.detailBtn {
+  height: 72rpx;
+  padding: 0 $spacing-md;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid $color-border;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+
+  Text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96rpx 0;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-lg;
+  opacity: 0.5;
+}
+
+.emptyTitle {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-xs;
+}
+
+.emptyDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xl;
+}
+
+.emptyBtn {
+  padding: $spacing-sm $spacing-xl;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+  }
+
+  Text {
+    font-size: $font-size-md;
+    color: $color-text-white;
+    font-weight: $font-weight-medium;
+  }
+}

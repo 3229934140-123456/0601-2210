@@ -35,15 +35,26 @@ const HomePage: React.FC = () => {
       scanType: ['qrCode', 'barCode'],
       success: (res) => {
         console.log('[Home] scan result:', res);
-        const { exhibitId, raw } = parseExhibitFromScan(res.result || '');
+        const { exhibitId, exhibitName, raw } = parseExhibitFromScan(res.result || '');
         if (exhibitId) {
-          Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
+          const tipText = exhibitName ? `识别：${exhibitName}` : '识别成功';
+          Taro.showToast({ title: tipText, icon: 'success', duration: 1200 });
+          setTimeout(() => {
+            Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
+          }, 800);
         } else {
           Taro.showModal({
             title: '未识别到展品',
-            content: `扫描内容：${raw}\n\n未匹配到对应展品，请检查二维码或尝试手动搜索。`,
-            showCancel: false,
-            confirmText: '知道了',
+            content: `扫描内容：${raw}\n\n未匹配到对应展品，可尝试搜索关键词。`,
+            confirmText: '去搜索',
+            cancelText: '关闭',
+            success: (modalRes) => {
+              if (modalRes.confirm) {
+                const keyword = (raw || '').slice(0, 8);
+                useAppStore.getState().setSearchKeyword(keyword);
+                Taro.switchTab({ url: '/pages/guide/index' });
+              }
+            },
           });
         }
       },

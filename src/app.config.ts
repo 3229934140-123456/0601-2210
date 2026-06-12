@@ -12,7 +12,8 @@ export default defineAppConfig({
     'pages/guide-booking/index',
     'pages/feedback/index',
     'pages/share-card/index',
-    'pages/settings/index'
+    'pages/settings/index',
+    'pages/my-routes/index'
   ],
   window: {
     backgroundTextStyle: 'light',

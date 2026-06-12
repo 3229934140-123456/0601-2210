@@ -37,6 +37,15 @@ const RouteDetailPage = () => {
   const progress = Math.min(100, Math.round((completedCount / totalCount) * 100));
   const currentIndex = safeNodes.findIndex((n) => n && n.exhibitId && !safeVisited.includes(n.exhibitId));
 
+  const allCompleted = completedCount >= safeNodes.length;
+  const currentStationNo = allCompleted ? safeNodes.length : completedCount + 1;
+  const currentNode = currentIndex >= 0 ? safeNodes[currentIndex] : null;
+  const nextNode = currentIndex >= 0 ? (safeNodes[currentIndex + 1] || null) : null;
+
+  const remainingTime = safeNodes
+    .filter((n, idx) => n && n.exhibitId && !safeVisited.includes(n.exhibitId))
+    .reduce((sum, n) => sum + (n?.estimatedTime || 5), 0);
+
   const getNodeStatus = (index: number): string => {
     const node = safeNodes[index];
     if (!node) return 'pending';
@@ -49,6 +58,12 @@ const RouteDetailPage = () => {
     if (status === 'completed') return '已完成';
     if (status === 'current') return '进行中';
     return '未开始';
+  };
+
+  const getPlanStatusText = () => {
+    if (completedCount === 0) return '即将开始';
+    if (allCompleted) return '参观已完成 🎉';
+    return `参观中 · 第 ${currentStationNo}/${safeNodes.length} 站`;
   };
 
   const handleSaveRoute = () => {
@@ -120,6 +135,57 @@ const RouteDetailPage = () => {
             <Text>路线介绍</Text>
           </View>
           <Text className={styles.descText}>{route.description}</Text>
+        </View>
+
+        <View className={styles.planCard}>
+          <View className={styles.planHeader}>
+            <Text className={styles.planTitle}>参观计划</Text>
+            <View className={`${styles.planStatus} ${allCompleted ? styles.planDone : styles.planDoing}`}>
+              <Text>{getPlanStatusText()}</Text>
+            </View>
+          </View>
+
+          <View className={styles.planRow}>
+            <View className={styles.planStation}>
+              <View className={styles.planDot}>
+                <Text className={styles.planDotText}>{allCompleted ? '✓' : currentStationNo}</Text>
+              </View>
+              <View className={styles.planInfo}>
+                <Text className={styles.planLabel}>当前站</Text>
+                <Text className={styles.planValue}>
+                  {currentNode ? currentNode.exhibitName : (allCompleted ? '全部完成' : '准备开始')}
+                </Text>
+                {currentNode && !allCompleted && (
+                  <Text className={styles.planMeta}>⏱ 约 {formatDuration(currentNode.estimatedTime || 5)}</Text>
+                )}
+              </View>
+            </View>
+          </View>
+
+          <View className={styles.planDivider} />
+
+          <View className={styles.planRow}>
+            <View className={styles.planStation}>
+              <View className={`${styles.planDot} ${styles.planDotNext}`}>
+                <Text className={styles.planDotText}>{nextNode ? currentStationNo + 1 : '—'}</Text>
+              </View>
+              <View className={styles.planInfo}>
+                <Text className={styles.planLabel}>下一站</Text>
+                <Text className={styles.planValue}>
+                  {nextNode ? nextNode.exhibitName : (allCompleted ? '无' : '尚未开始')}
+                </Text>
+                {nextNode && (
+                  <Text className={styles.planMeta}>⏱ 约 {formatDuration(nextNode.estimatedTime || 5)}</Text>
+                )}
+              </View>
+            </View>
+            {!allCompleted && remainingTime > 0 && (
+              <View className={styles.planRemaining}>
+                <Text className={styles.planRemainingLabel}>剩余</Text>
+                <Text className={styles.planRemainingValue}>{formatDuration(remainingTime)}</Text>
+              </View>
+            )}
+          </View>
         </View>
 
         <View className={styles.progressSection}>

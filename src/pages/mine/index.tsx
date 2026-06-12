@@ -35,7 +35,7 @@ const MinePage: React.FC = () => {
       icon: '🗺️',
       name: '已保存路线',
       desc: `${savedRouteList.length}条路线`,
-      url: '',
+      url: '/pages/my-routes/index',
     },
     {
       icon: '📜',

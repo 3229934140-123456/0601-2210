@@ -87,20 +87,31 @@ const GuidePage: React.FC = () => {
       onlyFromCamera: false,
       scanType: ['qrCode', 'barCode'],
       success: (res) => {
-        const { exhibitId, raw } = parseExhibitFromScan(res.result || '');
+        const { exhibitId, exhibitName, raw } = parseExhibitFromScan(res.result || '');
         if (exhibitId) {
-          Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
+          const tipText = exhibitName ? `识别：${exhibitName}` : '识别成功';
+          Taro.showToast({ title: tipText, icon: 'success', duration: 1200 });
+          setTimeout(() => {
+            Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
+          }, 800);
         } else {
           Taro.showModal({
             title: '未识别到展品',
-            content: `扫描内容：${raw}\n\n未匹配到对应展品，请检查二维码或手动搜索。`,
-            showCancel: false,
+            content: `扫描内容：${raw}\n\n未匹配到对应展品，可尝试将关键词填入搜索框。`,
+            confirmText: '填入搜索',
+            cancelText: '关闭',
+            success: (modalRes) => {
+              if (modalRes.confirm) {
+                const keyword = (raw || '').slice(0, 8);
+                setSearchKeyword(keyword);
+              }
+            },
           });
         }
       },
       fail: () => {},
     });
-  }, []);
+  }, [setSearchKeyword]);
 
   const currentHall = halls.find((h) => h.id === currentHallId);
   const showAccessTip = userProfile.accessibilityMode && currentHall && !currentHall.isAccessible;
@@ -115,7 +126,9 @@ const GuidePage: React.FC = () => {
 
   const handleFloorChange = (floor: number) => {
     setCurrentFloor(floor);
+    setCurrentHall('');
     setCategoryFilter('all');
+    setSortBy('default');
   };
 
   const handleClearSearch = () => {

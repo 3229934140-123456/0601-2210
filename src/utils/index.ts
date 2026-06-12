@@ -39,23 +39,31 @@ export const getRandomId = (): string => {
 
 export interface ScanParseResult {
   exhibitId: string | null;
+  exhibitName: string | null;
   raw: string;
 }
 
 export const parseExhibitFromScan = (raw: string): ScanParseResult => {
   const result = (raw || '').trim();
   let exhibitId: string | null = null;
+  let exhibitName: string | null = null;
+
+  const setMatched = (id: string) => {
+    const item = getExhibitById(id);
+    if (item) {
+      exhibitId = item.id;
+      exhibitName = item.name;
+      return true;
+    }
+    return false;
+  };
 
   if (result.startsWith('exhibit:')) {
     const id = result.replace('exhibit:', '').trim();
-    if (getExhibitById(id)) {
-      exhibitId = id;
-    }
+    setMatched(id);
   } else if (/^ex\d+$/i.test(result)) {
     const id = result.toLowerCase();
-    if (getExhibitById(id)) {
-      exhibitId = id;
-    }
+    setMatched(id);
   } else if (result.includes('exhibit=') || result.includes('exhibit%3D') || result.includes('id=')) {
     const patterns = [
       /[?&]exhibit=([^&]+)/i,
@@ -66,10 +74,7 @@ export const parseExhibitFromScan = (raw: string): ScanParseResult => {
       const match = result.match(pattern);
       if (match && match[1]) {
         const decoded = decodeURIComponent(match[1]).trim();
-        if (getExhibitById(decoded)) {
-          exhibitId = decoded;
-          break;
-        }
+        if (setMatched(decoded)) break;
       }
     }
   }
@@ -82,9 +87,10 @@ export const parseExhibitFromScan = (raw: string): ScanParseResult => {
     );
     if (matched) {
       exhibitId = matched.id;
+      exhibitName = matched.name;
     }
   }
 
-  return { exhibitId, raw: result };
+  return { exhibitId, exhibitName, raw: result };
 };
 
