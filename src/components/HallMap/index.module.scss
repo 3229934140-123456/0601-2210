@@ -18,6 +18,10 @@
   border-radius: $radius-button;
   background: $color-bg-hover;
   transition: all $transition-base;
+
+  &:active {
+    opacity: 0.85;
+  }
 }
 
 .floorTabActive {
@@ -109,16 +113,93 @@
 .mapImageWrap {
   position: relative;
   width: 100%;
-  height: 400rpx;
+  height: 520rpx;
   border-radius: $radius-md;
   overflow: hidden;
   margin-bottom: $spacing-md;
+  background: linear-gradient(135deg, #F7F3EC 0%, #EFE6D5 100%);
+  border: 2rpx dashed $color-border;
 }
 
-.mapImage {
+.mapFloorPlan {
+  position: relative;
   width: 100%;
   height: 100%;
-  opacity: 0.85;
+}
+
+.floor1 {
+  background-image:
+    linear-gradient(rgba(139, 69, 19, 0.04) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(139, 69, 19, 0.04) 1rpx, transparent 1rpx);
+  background-size: 40rpx 40rpx;
+}
+
+.floor2 {
+  background-image:
+    linear-gradient(rgba(46, 125, 91, 0.04) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(46, 125, 91, 0.04) 1rpx, transparent 1rpx);
+  background-size: 40rpx 40rpx;
+}
+
+.floor3 {
+  background-image:
+    linear-gradient(rgba(201, 168, 89, 0.06) 1rpx, transparent 1rpx),
+    linear-gradient(90deg, rgba(201, 168, 89, 0.06) 1rpx, transparent 1rpx);
+  background-size: 40rpx 40rpx;
+}
+
+.hallBlock {
+  position: absolute;
+  background: rgba($color-bg-card, 0.9);
+  border: 2rpx solid $color-border;
+  border-radius: $radius-sm;
+  padding: $spacing-xs $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all $transition-base;
+  z-index: 1;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.hallBlockClickable {
+  cursor: pointer;
+}
+
+.hallBlockActive {
+  border-color: $color-primary;
+  background: rgba($color-primary, 0.08);
+  z-index: 3;
+  box-shadow: 0 4rpx 16rpx rgba($color-primary, 0.2);
+}
+
+.hallBlockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rpx;
+}
+
+.hallBlockName {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.hallBlockAccess {
+  font-size: 20rpx;
+  margin-left: 4rpx;
+  flex-shrink: 0;
+}
+
+.hallBlockCount {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
 }
 
 .exhibitMarker {
@@ -129,9 +210,26 @@
   align-items: center;
   cursor: pointer;
   transition: all $transition-base;
+  z-index: 2;
 
   &:active {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
+    z-index: 5;
+  }
+}
+
+.miniMarker {
+  z-index: 2;
+
+  .markerDot {
+    width: 16rpx;
+    height: 16rpx;
+    border: 3rpx solid $color-bg-card;
+    box-shadow: 0 2rpx 8rpx rgba($color-primary, 0.35);
+  }
+
+  &.visitedMarker .markerDot {
+    box-shadow: 0 2rpx 8rpx rgba($color-secondary, 0.35);
   }
 }
 
@@ -151,11 +249,12 @@
 
 .markerLabel {
   position: absolute;
-  top: 32rpx;
+  top: 36rpx;
   background: rgba($color-text-primary, 0.85);
   padding: 6rpx $spacing-sm;
   border-radius: $radius-xs;
   white-space: nowrap;
+  z-index: 4;
 }
 
 .markerText {
@@ -163,10 +262,34 @@
   color: $color-text-white;
 }
 
+.mapToolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $spacing-md;
+}
+
+.toolbarBtn {
+  padding: $spacing-xs $spacing-md;
+  background: $color-bg-hover;
+  border-radius: $radius-sm;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  Text {
+    font-size: $font-size-xs;
+    color: $color-primary;
+    font-weight: $font-weight-medium;
+  }
+}
+
 .mapLegend {
   display: flex;
   justify-content: center;
   gap: $spacing-xl;
+  flex-wrap: wrap;
 }
 
 .legendItem {
@@ -181,8 +304,12 @@
   background: $color-primary;
   margin-right: $spacing-xs;
 
-  &.current {
-    background: $color-accent;
+  &.hallLegend {
+    width: 18rpx;
+    height: 18rpx;
+    border-radius: $radius-xs;
+    background: rgba($color-bg-card, 0.9);
+    border: 2rpx solid $color-primary;
   }
 
   &.visited {

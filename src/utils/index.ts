@@ -1,3 +1,5 @@
+import { exhibits, getExhibitById } from '@/data/exhibits';
+
 export const formatDuration = (minutes: number): string => {
   if (minutes < 60) return `${minutes}分钟`;
   const hours = Math.floor(minutes / 60);
@@ -34,3 +36,37 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
 export const getRandomId = (): string => {
   return Math.random().toString(36).substring(2, 11);
 };
+
+export interface ScanParseResult {
+  exhibitId: string | null;
+  raw: string;
+}
+
+export const parseExhibitFromScan = (raw: string): ScanParseResult => {
+  const result = (raw || '').trim();
+  let exhibitId: string | null = null;
+
+  if (result.startsWith('exhibit:')) {
+    const id = result.replace('exhibit:', '').trim();
+    if (getExhibitById(id)) {
+      exhibitId = id;
+    }
+  } else if (/^ex\d+$/i.test(result)) {
+    const id = result.toLowerCase();
+    if (getExhibitById(id)) {
+      exhibitId = id;
+    }
+  } else {
+    const matched = exhibits.find(
+      (e) =>
+        e.name.includes(result) ||
+        e.id.toLowerCase() === result.toLowerCase()
+    );
+    if (matched) {
+      exhibitId = matched.id;
+    }
+  }
+
+  return { exhibitId, raw: result };
+};
+

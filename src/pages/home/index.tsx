@@ -11,6 +11,7 @@ import { routes } from '@/data/routes';
 import { useAppStore } from '@/store/useAppStore';
 import classnames from 'classnames';
 import { GridItem } from '@/components/FunctionGrid';
+import { parseExhibitFromScan } from '@/utils';
 
 const HomePage: React.FC = () => {
   const [routeMode, setRouteMode] = useState<'children' | 'deep'>('children');
@@ -34,28 +35,13 @@ const HomePage: React.FC = () => {
       scanType: ['qrCode', 'barCode'],
       success: (res) => {
         console.log('[Home] scan result:', res);
-        const result = res.result || '';
-        let exhibitId = '';
-
-        if (result.startsWith('exhibit:')) {
-          exhibitId = result.replace('exhibit:', '');
-        } else if (/^ex\d+$/i.test(result)) {
-          exhibitId = result;
-        } else {
-          const matched = exhibits.find(
-            (e) =>
-              e.name.includes(result) ||
-              e.id.toLowerCase() === result.toLowerCase()
-          );
-          if (matched) exhibitId = matched.id;
-        }
-
-        if (exhibitId && getExhibitById(exhibitId)) {
+        const { exhibitId, raw } = parseExhibitFromScan(res.result || '');
+        if (exhibitId) {
           Taro.navigateTo({ url: `/pages/exhibit-detail/index?id=${exhibitId}` });
         } else {
           Taro.showModal({
             title: '未识别到展品',
-            content: `扫描内容：${result}\n\n未匹配到对应展品，请检查二维码是否正确或尝试手动搜索。`,
+            content: `扫描内容：${raw}\n\n未匹配到对应展品，请检查二维码或尝试手动搜索。`,
             showCancel: false,
             confirmText: '知道了',
           });
